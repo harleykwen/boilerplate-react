@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <RouteProvider>
             <ChakraProvider resetCSS theme={theme}>
                 <HelmetProvider>
-                    <Head title={document?.title} />
+                    <Head title='Boilerplate React' />
                     <App />
                 </HelmetProvider>
             </ChakraProvider>
