@@ -1,5 +1,5 @@
 import React from 'react'
-import usePosthog from './hooks/usePosthog'
+import { usePosthog } from './hooks'
 import { Router } from './router'
 import { Error, Loader } from './pages'
 
