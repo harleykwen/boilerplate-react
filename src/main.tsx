@@ -8,6 +8,11 @@ import { HelmetProvider } from 'react-helmet-async'
 import { Head } from './components'
 import { theme } from './theme'
 import { PostHogProvider} from 'posthog-js/react'
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const ENV = import.meta.env.VITE_ENV
+const queryClient = new QueryClient()
 
 const options = {
     api_host: import.meta.env.VITE_APP_PUBLIC_POSTHOG_HOST,
@@ -23,7 +28,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                         apiKey={import.meta.env.VITE_APP_PUBLIC_POSTHOG_KEY}
                         options={options}
                     >
-                        <App />
+                        <QueryClientProvider client={queryClient}>
+                            {ENV == 'DEVELOPMENT'
+                                ?   <ReactQueryDevtools initialIsOpen={false} />
+                                :   null
+                            }
+                            <App />
+                        </QueryClientProvider>
                     </PostHogProvider>
                 </HelmetProvider>
             </ChakraProvider>
