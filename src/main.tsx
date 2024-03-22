@@ -18,6 +18,8 @@ const options = {
     api_host: import.meta.env.VITE_APP_PUBLIC_POSTHOG_HOST,
 }
 
+ENV == 'DEVELOPMENT' && console.log({ theme })
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <RouteProvider>
