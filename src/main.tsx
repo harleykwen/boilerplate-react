@@ -13,15 +13,12 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 
 const ENV = import.meta.env.VITE_ENV
 const queryClient = new QueryClient()
-
 const options = {
     api_host: import.meta.env.VITE_APP_PUBLIC_POSTHOG_HOST,
 }
 
-ENV == 'DEVELOPMENT' && console.log({ theme })
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
+const MainApp = () => {
+    return (
         <RouteProvider>
             <ChakraProvider theme={theme}>
                 <HelmetProvider>
@@ -41,5 +38,17 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 </HelmetProvider>
             </ChakraProvider>
         </RouteProvider>
+    )
+}
+
+ENV == 'DEVELOPMENT' && console.log({ theme })
+
+ENV == 'DEVELOPMENT' && ReactDOM.createRoot(document.getElementById('root')!).render(
+    <MainApp />,
+)
+
+ENV != 'DEVELOPMENT' && ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+        <MainApp />
     </React.StrictMode>,
 )
