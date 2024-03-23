@@ -12,7 +12,17 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 const ENV = import.meta.env.VITE_ENV
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: false,
+        },
+        mutations: {
+            retry: false,
+        },
+    },
+})
 const options = {
     api_host: import.meta.env.VITE_APP_PUBLIC_POSTHOG_HOST,
 }

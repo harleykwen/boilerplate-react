@@ -1,6 +1,8 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
-const requestConfig = axios.create()
+const requestConfig = axios.create({
+    baseURL: import.meta.env.VITE_BASE_API_URL,
+})
 
 // Add a request interceptor
 requestConfig.interceptors.request.use(function (config: InternalAxiosRequestConfig<any>) {
