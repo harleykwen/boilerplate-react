@@ -9,7 +9,6 @@ const Weather: React.FC = () => {
             minHeight='100vh' 
             width='100%' 
             padding='1rem'
-            direction='column'
             gap='1rem'
         >
             <CurrentWeather />

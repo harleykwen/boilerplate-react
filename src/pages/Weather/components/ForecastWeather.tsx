@@ -6,6 +6,7 @@ import { id } from 'date-fns/locale'
 import { 
     Flex, 
     Image, 
+    Skeleton, 
     Text, 
 } from '@chakra-ui/react'
 
@@ -15,7 +16,7 @@ const ForecastWeather: React.FC = () => {
         () => forecastWeatherApi({
             lat: -6.706323,
             lon: 107.499404,
-            appid: '5d7c991b8820fd9339ecc4b4fc51d75a',
+            appid: import.meta.env.VITE_WEATHER_API_KEY,
         })
     )
 
@@ -33,15 +34,55 @@ const ForecastWeather: React.FC = () => {
 
     return (
         <Flex direction='column' gap='1.5rem'>
-            {forecastWeather?.data
+            {forecastWeather?.isFetching
+                ?   [...Array(5)]?.map((_, index: number) => {
+                        return (
+                            <Flex key={index} gap='0.5rem' alignItems='center'>
+                                <Flex 
+                                    direction='column' 
+                                    width='75px' 
+                                    alignItems='center' 
+                                    justifyContent='center'
+                                >
+                                    <Skeleton height='18px' width='30px' />
+                                    <Skeleton height='18px' width='30px' />
+                                    <Skeleton height='18px' width='30px' />
+                                </Flex>
+                                {[...Array(8)]?.map((_, weatherIndex: number) => {
+                                    return (
+                                        <Flex 
+                                            key={weatherIndex} 
+                                            direction='column' 
+                                            justifyContent='center' 
+                                            alignItems='center'
+                                        >
+                                            <Skeleton width='75px' height='75px' />
+                                            <Skeleton height='18px' width='30px' />
+                                            <Skeleton height='18px' width='30px' />
+                                        </Flex>     
+                                    )
+                                })}
+                            </Flex>
+                        )
+                    })
+                :   null
+            }
+
+            {!forecastWeather?.isFetching && forecastWeather?.data
                 ?   Object.entries(groupByDay(forecastWeather?.data?.list))?.map((data: any, index: number) => {
                         const key = data[0]
                         const value = data[1]
                         return (
                             <Flex key={index} gap='0.5rem' alignItems='center'>
-                                <Flex direction='column' width='150px'>
-                                    <Text fontSize='12px' fontWeight='semibold'>{format(new Date(key), 'eeee', { locale: id })}</Text>
-                                    <Text fontSize='12px' color='gray.500'>{format(new Date(key), 'dd LLLL yyyy', { locale: id })}</Text>
+                                <Flex 
+                                    direction='column' 
+                                    width='75px' 
+                                    alignItems='center' 
+                                    justifyContent='center'
+                                >
+                                    <Text fontSize='12px' fontWeight='semibold'>{format(new Date(key), 'eee', { locale: id })}</Text>
+                                    <Text fontSize='12px' fontWeight='semibold'>{format(new Date(key), 'dd', { locale: id })}</Text>
+                                    <Text fontSize='12px' color='gray.500'>{format(new Date(key), 'LLL', { locale: id })}</Text>
                                 </Flex>
                                 {value?.map((weather: any, weatherIndex: number) => {
                                     return (
@@ -51,7 +92,11 @@ const ForecastWeather: React.FC = () => {
                                             justifyContent='center' 
                                             alignItems='center'
                                         >
-                                            <Image width='75px' src={`https://openweathermap.org/img/wn/${weather?.weather[0]?.icon}@4x.png`} />
+                                            <Image 
+                                                width='75px' 
+                                                height='75px' 
+                                                src={`https://openweathermap.org/img/wn/${weather?.weather[0]?.icon}@4x.png`} 
+                                            />
                                             <Text fontSize='12px' fontWeight='semibold'>{Math.ceil(weather?.main?.temp - 273.15)}°</Text>
                                             <Text fontSize='12px' color='gray.500'>{format(new Date(weather?.dt*1000), 'HH:mm')}</Text>
                                         </Flex>

@@ -5,6 +5,7 @@ import {
     Divider,
     Flex, 
     Image, 
+    Skeleton, 
     Text, 
 } from '@chakra-ui/react'
 
@@ -14,7 +15,7 @@ const CurrentWeather: React.FC = () => {
         () => currentWeatherApi({
             lat: -6.706323,
             lon: 107.499404,
-            appid: '5d7c991b8820fd9339ecc4b4fc51d75a',
+            appid: import.meta.env.VITE_WEATHER_API_KEY,
         })
     )
 
@@ -27,9 +28,26 @@ const CurrentWeather: React.FC = () => {
             direction='column'
             width='max-content'
         >
-            {currentWeather?.data
+            {currentWeather?.isFetching
                 ?   <>
-                        <Image src={`https://openweathermap.org/img/wn/${currentWeather?.data?.weather[0]?.icon}@4x.png`} alt='weather-icon' />
+                        <Skeleton height='200px' width='200px' />
+                        <Skeleton height='53.99px' width='200px' />
+                        <Skeleton height='21.01px' width='200px' />
+                        <Divider marginY='1rem' />
+                        <Skeleton height='18px' width='200px' />
+                        <Skeleton height='18px' width='200px' />
+                        <Skeleton height='18px' width='200px' />
+                    </>
+                :   null
+            }
+            {!currentWeather?.isFetching && currentWeather?.data
+                ?   <>
+                        <Image 
+                            src={`https://openweathermap.org/img/wn/${currentWeather?.data?.weather[0]?.icon}@4x.png`} 
+                            alt='weather-icon' 
+                            width='200px'
+                            height='200px'
+                        />
                         <Text fontSize='36px' fontWeight='semibold'>{Math.ceil(currentWeather?.data?.main?.temp - 273.15)}°</Text>
                         <Text fontSize='14px' fontWeight='semibold' textTransform='capitalize'>{currentWeather?.data?.weather[0]?.description}</Text>
                         <Divider marginY='1rem' />
