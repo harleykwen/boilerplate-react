@@ -32,7 +32,7 @@ const MainApp = () => {
         <RouteProvider>
             <ChakraProvider theme={theme}>
                 <HelmetProvider>
-                    <Head title='Boilerplate React' />
+                    <Head title='Weather App' />
                     <PostHogProvider
                         apiKey={import.meta.env.VITE_APP_PUBLIC_POSTHOG_KEY}
                         options={options}
