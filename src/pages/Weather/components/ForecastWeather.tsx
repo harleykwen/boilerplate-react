@@ -35,7 +35,7 @@ const ForecastWeather: React.FC = () => {
     return (
         <Flex direction='column' gap='1.5rem'>
             {forecastWeather?.isFetching
-                ?   [...Array(5)]?.map((_, index: number) => {
+                ?   [...Array(6)]?.map((_, index: number) => {
                         return (
                             <Flex key={index} gap='0.5rem' alignItems='center'>
                                 <Flex 
