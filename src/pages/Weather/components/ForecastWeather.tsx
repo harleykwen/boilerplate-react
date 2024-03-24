@@ -33,7 +33,10 @@ const ForecastWeather: React.FC = () => {
     }
 
     return (
-        <Flex direction='column' gap='1.5rem'>
+        <Flex 
+            direction='column' 
+            gap='1.5rem' 
+        >
             {forecastWeather?.isFetching
                 ?   [...Array(6)]?.map((_, index: number) => {
                         return (
@@ -73,11 +76,17 @@ const ForecastWeather: React.FC = () => {
                         const key = data[0]
                         const value = data[1]
                         return (
-                            <Flex key={index} gap='0.5rem' alignItems='center'>
+                            <Flex 
+                                key={index} 
+                                gap='0.5rem' 
+                                alignItems='center'
+                                overflow='auto' 
+                                width='max-content' 
+                            >
                                 <Flex 
                                     direction='column' 
                                     width='75px' 
-                                    alignItems='center' 
+                                    alignItems={{ base: 'flex-start', sm: 'center' }} 
                                     justifyContent='center'
                                 >
                                     <Text fontSize='12px' fontWeight='semibold'>{format(new Date(key), 'eee', { locale: id })}</Text>
@@ -91,6 +100,7 @@ const ForecastWeather: React.FC = () => {
                                             direction='column' 
                                             justifyContent='center' 
                                             alignItems='center'
+                                            width='max-content'
                                         >
                                             <Image 
                                                 width='75px' 
