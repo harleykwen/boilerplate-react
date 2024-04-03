@@ -33,18 +33,28 @@ const MainApp = () => {
             <ChakraProvider theme={theme}>
                 <HelmetProvider>
                     <Head title='Weather App' />
-                    <PostHogProvider
-                        apiKey={import.meta.env.VITE_APP_PUBLIC_POSTHOG_KEY}
-                        options={options}
-                    >
-                        <QueryClientProvider client={queryClient}>
-                            {ENV == 'DEVELOPMENT'
-                                ?   <ReactQueryDevtools initialIsOpen={false} />
-                                :   null
-                            }
-                            <App />
-                        </QueryClientProvider>
-                    </PostHogProvider>
+
+                    {Boolean(import.meta.env.VITE_IS_TOGGLE_FEATURE)
+                        ?   <PostHogProvider
+                                apiKey={import.meta.env.VITE_APP_PUBLIC_POSTHOG_KEY}
+                                options={options}
+                            >
+                                <QueryClientProvider client={queryClient}>
+                                    {ENV == 'DEVELOPMENT'
+                                        ?   <ReactQueryDevtools initialIsOpen={false} />
+                                        :   null
+                                    }
+                                    <App />
+                                </QueryClientProvider>
+                            </PostHogProvider>
+                        :   <QueryClientProvider client={queryClient}>
+                                {ENV == 'DEVELOPMENT'
+                                    ?   <ReactQueryDevtools initialIsOpen={false} />
+                                    :   null
+                                }
+                                <App />
+                            </QueryClientProvider>
+                    }
                 </HelmetProvider>
             </ChakraProvider>
         </RouteProvider>
